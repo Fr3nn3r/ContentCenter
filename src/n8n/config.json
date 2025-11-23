@@ -1,0 +1,150 @@
+{
+  "environment": {
+    "mode": "dev",                         
+    "timezone": "Europe/Zurich"
+  },
+
+  "scheduler": {
+    "daily_summary_enabled": true,
+    "daily_summary_hour": 6,               
+    "target_posts_per_day": 1,
+    "max_new_ideas_per_run": 10
+  },
+
+  "google_docs": {
+    "brain_dump_strategy": "weekly_single_doc",  
+    "brain_dump_folder_id": "GOOGLE_DRIVE_FOLDER_ID_FOR_BRAIN_DUMPS",
+    "brain_dump_file_prefix": "BrainDump_",      
+    "brain_dump_template_file_id": "OPTIONAL_TEMPLATE_DOC_ID",
+    "content_engine_label": "CONTENT_ENGINE_PROCESSED"
+  },
+
+  "content_vault": {
+    "backend": "google_sheets",       
+
+    "google_sheets": {
+      "spreadsheet_id": "CONTENT_VAULT_SPREADSHEET_ID",
+      "sheet_name": "Ideas"
+    },
+    "notion": {
+      "database_id": "NOTION_DB_ID"
+    },
+    "supabase": {
+      "url": "SUPABASE_URL",
+      "project": "SUPABASE_PROJECT_NAME",
+      "table": "content_ideas"
+    }
+  },
+
+  "llm": {
+    "provider": "openai",
+    "model_idea_classification": "gpt-5.1",
+    "model_post_expansion": "gpt-5.1",
+    "temperature_classification": 0.2,
+    "temperature_expansion": 0.7,
+    "max_tokens_classification": 800,
+    "max_tokens_expansion": 1600
+  },
+
+  "content_lanes": [
+    {
+      "id": "builder_diary",
+      "label": "Builder Diaries",
+      "description": "Failures, getting fired, tough entrepreneurship lessons, honest weekly reflections.",
+      "target_posts_per_week": 3
+    },
+    {
+      "id": "show_dont_tell",
+      "label": "Show Don’t Tell (Demos)",
+      "description": "Small AI/n8n/DI/agents demos with screenshots, screen recordings, and practical steps.",
+      "target_posts_per_week": 3
+    },
+    {
+      "id": "founder_philosophy",
+      "label": "Founder & Technical Philosophy",
+      "description": "Programming + AI leverage, insurance automation, agentic workflows, product philosophy.",
+      "target_posts_per_week": 2
+    }
+  ],
+
+  "scoring": {
+    "min_publish_score": 0.6,
+    "weights": {
+      "novelty": 0.25,
+      "usefulness": 0.3,
+      "emotional_resonance": 0.2,
+      "clarity": 0.15,
+      "alignment_with_brand": 0.1
+    }
+  },
+
+  "notifications": {
+    "enabled": true,
+    "channel": "telegram",
+    "telegram": {
+      "chat_id": "TELEGRAM_CHAT_ID_FOR_DAILY_SUMMARY"
+    },
+    "email": {
+      "to": "you@example.com"
+    }
+  },
+
+  "linkedin": {
+    "auto_post_enabled": false,
+    "default_post_time_hour": 8,
+    "include_hashtags": true,
+    "hashtags": [
+      "#AI",
+      "#Automation",
+      "#Entrepreneurship",
+      "#n8n",
+      "#Insurance",
+      "#Agents"
+    ]
+  },
+
+  "inspiration_sources": {
+    "apify": {
+      "enabled": false,
+      "actors": [
+        {
+          "id": "HACKER_NEWS_SCRAPER_ACTOR_ID",
+          "label": "hacker_news_top",
+          "max_items": 10
+        },
+        {
+          "id": "SUBSTACK_SCRAPER_ACTOR_ID",
+          "label": "ai_newsletters",
+          "max_items": 5
+        }
+      ]
+    },
+    "rss": {
+      "enabled": false,
+      "feeds": [
+        {
+          "label": "latent_space",
+          "url": "https://latent.space/feed.xml"
+        },
+        {
+          "label": "bens_bites",
+          "url": "https://www.bensbites.co/rss"
+        }
+      ]
+    }
+  },
+
+  "brand": {
+    "persona_name": "Fred",
+    "voice_tone": "honest, slightly playful, non-arrogant, technical but clear",
+    "include_owl_motif": true,
+    "owl_rules": {
+      "max_references_per_week": 2,
+      "allowed_contexts": [
+        "longer reflective posts",
+        "milestone updates",
+        "talks about long-term mission"
+      ]
+    }
+  }
+}
