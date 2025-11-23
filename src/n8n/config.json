@@ -12,7 +12,7 @@
   },
 
   "google_docs": {
-    "brain_dump_strategy": "weekly_single_doc",  
+    "brain_dump_document_id": "1FiaXOJITCFS-o_v2vF0JrN6s8VrblYsiIFtd-a0jzQE",  
     "brain_dump_folder_id": "GOOGLE_DRIVE_FOLDER_ID_FOR_BRAIN_DUMPS",
     "brain_dump_file_prefix": "BrainDump_",      
     "brain_dump_template_file_id": "OPTIONAL_TEMPLATE_DOC_ID",
