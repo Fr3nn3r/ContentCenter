@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card from '../../components/Card.astro';
+import Tag from '../../components/Tag.astro';
+
+const projects = [
+  {
+    title: 'ClaimEval',
+    oneLiner: 'QA copilot that helps claims leaders review more files with higher consistency',
+    tags: ['AI', 'Insurance', 'QA'],
+    outcome: 'Faster QA cycles, clearer audit trail',
+    href: '/projects/claimeval',
+    featured: true,
+  },
+  {
+    title: 'Prompt Management Playbook',
+    oneLiner: 'Versioned, testable, reviewable prompts as code',
+    tags: ['AI', 'DevOps', 'LLM'],
+    outcome: 'Zero mystery breakages when prompts change',
+    href: '/projects/prompt-playbook',
+    featured: true,
+  },
+  {
+    title: 'Agentic Context Builder',
+    oneLiner: 'Turning messy inputs into reliable LLM work units',
+    tags: ['AI', 'Architecture', 'LLM'],
+    outcome: 'Debuggable, composable agent workflows',
+    href: '/projects/context-builder',
+    featured: true,
+  },
+];
+
+const allTags = [...new Set(projects.flatMap((p) => p.tags))].sort();
+---
+
+<BaseLayout
+  title="Projects"
+  description="AI projects and case studies by Fred Brunner. Claims automation, prompt engineering, and agentic systems."
+>
+  <div class="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-24">
+    <h1 class="text-4xl font-bold tracking-tight text-gray-900">Projects</h1>
+    <p class="mt-4 text-lg text-gray-600 max-w-2xl">
+      Case studies from real work. Each project follows the same format:
+      Problem, Constraints, Approach, Results, Artifacts.
+    </p>
+
+    <!-- Tag filters -->
+    <div class="mt-8 flex flex-wrap gap-2">
+      {allTags.map((tag) => (
+        <Tag href={`/tags/${tag.toLowerCase()}`}>{tag}</Tag>
+      ))}
+    </div>
+
+    <!-- Project grid -->
+    <div class="mt-12 grid gap-6 sm:grid-cols-2">
+      {projects.map((project) => (
+        <Card href={project.href} class="flex flex-col">
+          <div class="flex flex-wrap gap-2 mb-3">
+            {project.tags.map((tag) => (
+              <Tag>{tag}</Tag>
+            ))}
+          </div>
+          <h2 class="font-semibold text-lg text-gray-900">{project.title}</h2>
+          <p class="mt-1 text-sm text-gray-500 flex-1">{project.oneLiner}</p>
+          <p class="mt-4 text-sm text-gray-600">
+            <span class="font-medium">Outcome:</span> {project.outcome}
+          </p>
+        </Card>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

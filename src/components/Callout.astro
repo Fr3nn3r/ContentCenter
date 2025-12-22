@@ -1,0 +1,47 @@
+---
+interface Props {
+  type?: 'lesson' | 'pitfall' | 'checklist' | 'note';
+  title?: string;
+}
+
+const { type = 'note', title } = Astro.props;
+
+const typeConfig = {
+  lesson: {
+    bg: 'bg-blue-50',
+    border: 'border-blue-200',
+    icon: '[Lesson]',
+    defaultTitle: 'Lesson Learned',
+  },
+  pitfall: {
+    bg: 'bg-amber-50',
+    border: 'border-amber-200',
+    icon: '[!]',
+    defaultTitle: 'Pitfall',
+  },
+  checklist: {
+    bg: 'bg-green-50',
+    border: 'border-green-200',
+    icon: '[v]',
+    defaultTitle: 'Checklist',
+  },
+  note: {
+    bg: 'bg-gray-50',
+    border: 'border-gray-200',
+    icon: '[i]',
+    defaultTitle: 'Note',
+  },
+};
+
+const config = typeConfig[type];
+---
+
+<aside class:list={['rounded-lg border p-4 my-6', config.bg, config.border]}>
+  <p class="font-semibold text-sm text-gray-900 mb-2">
+    <span class="font-mono mr-1">{config.icon}</span>
+    {title || config.defaultTitle}
+  </p>
+  <div class="text-sm text-gray-600 prose prose-sm">
+    <slot />
+  </div>
+</aside>

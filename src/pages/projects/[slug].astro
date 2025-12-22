@@ -1,0 +1,97 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Tag from '../../components/Tag.astro';
+import Button from '../../components/Button.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+const { title, oneLiner, tags, industry, stack, problem, constraints, approach, results, artifacts } = project.data;
+---
+
+<BaseLayout
+  title={title}
+  description={oneLiner}
+>
+  <article class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
+    <!-- Header -->
+    <header>
+      <div class="flex flex-wrap gap-2 mb-4">
+        {tags.map((tag) => (
+          <Tag href={`/tags/${tag.toLowerCase()}`}>{tag}</Tag>
+        ))}
+      </div>
+      <h1 class="text-4xl font-bold tracking-tight text-gray-900">{title}</h1>
+      <p class="mt-4 text-xl text-gray-600">{oneLiner}</p>
+    </header>
+
+    <!-- Meta -->
+    <dl class="mt-8 grid grid-cols-2 gap-4 text-sm border-y border-gray-200 py-6">
+      <div>
+        <dt class="font-medium text-gray-500">Industry</dt>
+        <dd class="mt-1 text-gray-900">{industry}</dd>
+      </div>
+      <div>
+        <dt class="font-medium text-gray-500">Stack</dt>
+        <dd class="mt-1 text-gray-900">{stack.join(', ')}</dd>
+      </div>
+    </dl>
+
+    <!-- Summary sections -->
+    <div class="mt-12 space-y-8">
+      <section>
+        <h2 class="text-lg font-semibold text-gray-900">Problem</h2>
+        <p class="mt-2 text-gray-600">{problem}</p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-semibold text-gray-900">Constraints</h2>
+        <p class="mt-2 text-gray-600">{constraints}</p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-semibold text-gray-900">Approach</h2>
+        <p class="mt-2 text-gray-600">{approach}</p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-semibold text-gray-900">Results</h2>
+        <p class="mt-2 text-gray-600">{results}</p>
+      </section>
+
+      {artifacts.length > 0 && (
+        <section>
+          <h2 class="text-lg font-semibold text-gray-900">Artifacts</h2>
+          <ul class="mt-2 space-y-2">
+            {artifacts.map((artifact) => (
+              <li>
+                <a href={artifact.url} class="text-blue-600 hover:underline">
+                  {artifact.label}
+                </a>
+                <span class="text-gray-500 text-sm ml-2">({artifact.type})</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </div>
+
+    <!-- Full content -->
+    <div class="mt-12 prose prose-gray max-w-none">
+      <Content />
+    </div>
+
+    <!-- Back link -->
+    <div class="mt-16 pt-8 border-t border-gray-200">
+      <Button href="/projects" variant="ghost">&larr; All projects</Button>
+    </div>
+  </article>
+</BaseLayout>

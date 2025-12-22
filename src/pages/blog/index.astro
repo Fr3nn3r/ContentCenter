@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts: any[] = [];
+---
+
+<BaseLayout
+  title="Blog"
+  description="Writing about AI, automation, insurance tech, and building reliable systems."
+>
+  <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
+    <h1 class="text-4xl font-bold tracking-tight text-gray-900">Blog</h1>
+    <p class="mt-4 text-lg text-gray-600">
+      Writing about AI, automation, and building systems that work.
+    </p>
+
+    {posts.length === 0 ? (
+      <div class="mt-12 rounded-lg border border-gray-200 bg-gray-50 p-8 text-center">
+        <p class="text-gray-500">
+          Blog posts coming soon.
+        </p>
+        <p class="mt-2 text-sm text-gray-500">
+          Topics: AI reliability, insurance automation, prompt engineering, agentic systems.
+        </p>
+      </div>
+    ) : (
+      <div class="mt-12 space-y-8">
+        {posts.map((post) => (
+          <article>
+            <a href={`/blog/${post.slug}`} class="group block">
+              <h2 class="font-semibold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">
+                {post.title}
+              </h2>
+              <p class="mt-1 text-sm text-gray-500">{post.summary}</p>
+            </a>
+          </article>
+        ))}
+      </div>
+    )}
+  </div>
+</BaseLayout>

@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Card from '../components/Card.astro';
+import Tag from '../components/Tag.astro';
+
+const featuredProjects = [
+  {
+    title: 'ClaimEval',
+    oneLiner: 'QA copilot for claims review',
+    outcome: 'Faster QA cycles with audit trail',
+    tags: ['AI', 'Insurance'],
+    href: '/projects/claimeval',
+  },
+  {
+    title: 'Prompt Management Playbook',
+    oneLiner: 'Versioned, testable prompts',
+    outcome: 'Zero mystery breakages',
+    tags: ['AI', 'DevOps'],
+    href: '/projects/prompt-playbook',
+  },
+  {
+    title: 'Agentic Context Builder',
+    oneLiner: 'Reliable LLM context pipelines',
+    outcome: 'Debuggable agent workflows',
+    tags: ['AI', 'Architecture'],
+    href: '/projects/context-builder',
+  },
+];
+---
+
+<BaseLayout
+  title="Home"
+  description="Fred Brunner - AI Solutions Architect. Building reliable AI systems for insurance and operations."
+>
+  <div class="mx-auto max-w-5xl px-4 sm:px-6">
+    <!-- Hero -->
+    <section class="py-16 sm:py-24">
+      <div class="max-w-2xl">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+          I build AI systems that work.
+        </h1>
+        <p class="mt-6 text-lg text-gray-600 leading-relaxed">
+          AI Solutions Architect specializing in insurance and operations.
+          I turn messy workflows into structured, auditable processes
+          that teams can actually trust.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <Button href="/contact" variant="primary">Get in touch</Button>
+          <Button href="/projects" variant="secondary">View projects</Button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Projects -->
+    <section class="py-16 border-t border-gray-200">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="text-2xl font-bold text-gray-900">Featured Projects</h2>
+        <a href="/projects" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">
+          View all &rarr;
+        </a>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {featuredProjects.map((project) => (
+          <Card href={project.href} class="flex flex-col">
+            <div class="flex flex-wrap gap-2 mb-3">
+              {project.tags.map((tag) => (
+                <Tag>{tag}</Tag>
+              ))}
+            </div>
+            <h3 class="font-semibold text-lg text-gray-900">{project.title}</h3>
+            <p class="mt-1 text-sm text-gray-500">{project.oneLiner}</p>
+            <p class="mt-3 text-sm text-gray-600">
+              <span class="font-medium">Outcome:</span> {project.outcome}
+            </p>
+          </Card>
+        ))}
+      </div>
+    </section>
+
+    <!-- Featured Writing -->
+    <section class="py-16 border-t border-gray-200">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="text-2xl font-bold text-gray-900">Writing</h2>
+        <a href="/blog" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">
+          View all &rarr;
+        </a>
+      </div>
+      <p class="text-gray-500">
+        Blog posts coming soon. Topics: AI reliability, insurance automation, prompt engineering.
+      </p>
+    </section>
+  </div>
+</BaseLayout>
