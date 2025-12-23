@@ -1,11 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
+import { buildBreadcrumbSchema } from '../lib/seo';
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', url: 'https://fredbrunner.com/' },
+  { name: 'Contact' },
+]);
 ---
 
 <BaseLayout
   title="Contact"
-  description="Get in touch with Fred Brunner for AI consulting, collaboration, or questions."
+  description="Hire an AI Solutions Architect. Contact Fred Brunner for enterprise AI consulting, proof of concept development, or LLM implementation services in Switzerland."
+  schema={breadcrumbSchema}
 >
   <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24">
     <h1 class="text-4xl font-bold tracking-tight text-gray-900">Contact</h1>
@@ -20,10 +27,10 @@ import Button from '../components/Button.astro';
         <h2 class="font-semibold text-lg text-gray-900">Email</h2>
         <p class="mt-2">
           <a
-            href="mailto:fred@example.com"
+            href="mailto:frederic.brunner@aiswissknife.com"
             class="text-blue-600 hover:underline"
           >
-            fred@example.com
+            frederic.brunner@aiswissknife.com
           </a>
         </p>
         <p class="mt-1 text-sm text-gray-500">
@@ -38,7 +45,7 @@ import Button from '../components/Button.astro';
           For a quick intro call, book a time directly:
         </p>
         <div class="mt-4">
-          <Button href="https://calendly.com/your-link" variant="secondary">
+          <Button href="https://calendly.com/frederic-brunner/intro" variant="secondary">
             Book a 15-min call
           </Button>
         </div>
@@ -49,13 +56,13 @@ import Button from '../components/Button.astro';
         <h2 class="font-semibold text-lg text-gray-900">Elsewhere</h2>
         <ul class="mt-2 space-y-2">
           <li>
-            <a href="https://linkedin.com/in/your-profile" class="text-blue-600 hover:underline">
+            <a href="https://www.linkedin.com/in/frdbrunner/" class="text-blue-600 hover:underline">
               LinkedIn
             </a>
           </li>
           <li>
-            <a href="https://github.com/your-username" class="text-blue-600 hover:underline">
-              GitHub
+            <a href="https://x.com/fredbrunner" class="text-blue-600 hover:underline">
+              X (Twitter)
             </a>
           </li>
         </ul>

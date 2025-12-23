@@ -2,24 +2,33 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { buildPersonSchema, buildWebsiteSchema } from '../lib/seo';
 
 interface Props {
   title: string;
   description?: string;
   ogImage?: string;
   canonicalUrl?: string;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
   title,
-  description = "Fred Brunner - AI Solutions Architect",
-  ogImage,
-  canonicalUrl
+  description = "Fred Brunner - AI Solutions Architect specializing in insurance and enterprise AI systems.",
+  ogImage = "/fred_brunner_portrait.jpg",
+  canonicalUrl,
+  schema
 } = Astro.props;
 
+// Global schemas present on all pages
+const globalSchemas = [buildPersonSchema(), buildWebsiteSchema()];
+
+const SITE_URL = 'https://fredbrunner.com';
 const siteTitle = title ? `${title} | Fred Brunner` : "Fred Brunner";
 const currentUrl = canonicalUrl || Astro.url.href;
 const currentPath = Astro.url.pathname;
+const absoluteOgImage = ogImage?.startsWith('http') ? ogImage : `${SITE_URL}${ogImage}`;
 ---
 
 <!doctype html>
@@ -39,15 +48,26 @@ const currentPath = Astro.url.pathname;
     <meta property="og:url" content={currentUrl} />
     <meta property="og:title" content={siteTitle} />
     <meta property="og:description" content={description} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image" content={absoluteOgImage} />}
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={siteTitle} />
     <meta name="twitter:description" content={description} />
-    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    {ogImage && <meta name="twitter:image" content={absoluteOgImage} />}
+
+    <!-- Geographic targeting -->
+    <meta name="geo.region" content="CH-ZH" />
+    <meta name="geo.placename" content="Dübendorf" />
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="Fred Brunner Blog" href="/rss.xml" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Structured Data -->
+    <JsonLd schema={globalSchemas} />
+    {schema && <JsonLd schema={schema} />}
 
     <!-- Preconnect to font CDN -->
     <link rel="preconnect" href="https://rsms.me/" />

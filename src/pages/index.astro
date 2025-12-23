@@ -3,6 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import Card from '../components/Card.astro';
 import Tag from '../components/Tag.astro';
+import { buildBreadcrumbSchema } from '../lib/seo';
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', url: 'https://fredbrunner.com/' },
+]);
 
 const featuredProjects = [
   {
@@ -30,8 +35,9 @@ const featuredProjects = [
 ---
 
 <BaseLayout
-  title="Home"
-  description="Fred Brunner - AI Solutions Architect. Building reliable AI systems for insurance and operations."
+  title="AI Solutions Architect"
+  description="Fred Brunner - AI Solutions Architect in Switzerland. I help enterprises build reliable AI systems for insurance, claims automation, and operations. Hire an AI consultant."
+  schema={breadcrumbSchema}
 >
   <div class="mx-auto max-w-5xl px-4 sm:px-6">
     <!-- Hero -->

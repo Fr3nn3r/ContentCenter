@@ -1,17 +1,24 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { buildBreadcrumbSchema } from '../lib/seo';
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', url: 'https://fredbrunner.com/' },
+  { name: 'About' },
+]);
 ---
 
 <BaseLayout
   title="About"
-  description="Fred Brunner - AI Solutions Architect. Background, expertise, and current focus."
+  description="Fred Brunner - AI Solutions Architect in Switzerland. Enterprise AI consultant specializing in insurance automation, claims processing, and LLM implementation."
+  schema={breadcrumbSchema}
 >
   <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
     <h1 class="text-4xl font-bold tracking-tight text-gray-900">About</h1>
 
     <div class="mt-8 prose prose-lg prose-gray max-w-none">
       <p class="text-xl text-gray-600">
-        I'm Fred Brunner, an AI Solutions Architect based in [Location].
+        I'm Fred Brunner, an AI Solutions Architect based in Dübendorf, Switzerland.
         I help insurance and operations teams build AI systems that actually work in production.
       </p>
 

@@ -1,12 +1,19 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { buildBreadcrumbSchema } from '../../lib/seo';
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', url: 'https://fredbrunner.com/' },
+  { name: 'Blog' },
+]);
 
 const posts: any[] = [];
 ---
 
 <BaseLayout
   title="Blog"
-  description="Writing about AI, automation, insurance tech, and building reliable systems."
+  description="Practical insights on enterprise AI implementation, prompt engineering, and building reliable LLM systems. Written by Fred Brunner, AI Solutions Architect."
+  schema={breadcrumbSchema}
 >
   <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
     <h1 class="text-4xl font-bold tracking-tight text-gray-900">Blog</h1>

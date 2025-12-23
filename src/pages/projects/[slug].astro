@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Tag from '../../components/Tag.astro';
 import Button from '../../components/Button.astro';
+import { buildBreadcrumbSchema, buildProjectSchema } from '../../lib/seo';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects', ({ data }) => !data.draft);
@@ -15,11 +16,28 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { Content } = await project.render();
 const { title, oneLiner, tags, industry, stack, problem, constraints, approach, results, artifacts } = project.data;
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', url: 'https://fredbrunner.com/' },
+  { name: 'Projects', url: 'https://fredbrunner.com/projects/' },
+  { name: title },
+]);
+
+const projectSchema = buildProjectSchema({
+  title,
+  oneLiner,
+  slug: project.id,
+  tags,
+  stack,
+});
+
+const pageSchemas = [breadcrumbSchema, projectSchema];
 ---
 
 <BaseLayout
-  title={title}
-  description={oneLiner}
+  title={`${title} - AI Case Study`}
+  description={`${oneLiner}. ${results.slice(0, 100)}... Read the full case study.`}
+  schema={pageSchemas}
 >
   <article class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
     <!-- Header -->

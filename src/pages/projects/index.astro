@@ -2,6 +2,12 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Card from '../../components/Card.astro';
 import Tag from '../../components/Tag.astro';
+import { buildBreadcrumbSchema } from '../../lib/seo';
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', url: 'https://fredbrunner.com/' },
+  { name: 'Projects' },
+]);
 
 const projects = [
   {
@@ -34,8 +40,9 @@ const allTags = [...new Set(projects.flatMap((p) => p.tags))].sort();
 ---
 
 <BaseLayout
-  title="Projects"
-  description="AI projects and case studies by Fred Brunner. Claims automation, prompt engineering, and agentic systems."
+  title="AI Projects & Case Studies"
+  description="Enterprise AI implementations by Fred Brunner. Case studies in claims automation, prompt management, and LLM pipelines. View proof of work from real projects."
+  schema={breadcrumbSchema}
 >
   <div class="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-24">
     <h1 class="text-4xl font-bold tracking-tight text-gray-900">Projects</h1>
