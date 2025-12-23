@@ -14,14 +14,24 @@ const breadcrumbSchema = buildBreadcrumbSchema([
   schema={breadcrumbSchema}
 >
   <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
-    <h1 class="text-4xl font-bold tracking-tight text-gray-900">About</h1>
+    <!-- Hero with portrait -->
+    <div class="flex flex-col sm:flex-row gap-8 items-start">
+      <img
+        src="/fred_brunner_portrait.jpg"
+        alt="Frederic Brunner"
+        class="w-40 h-40 sm:w-48 sm:h-48 rounded-full object-cover border-4 border-hot-pink shadow-lg flex-shrink-0"
+      />
+      <div>
+        <h1 class="text-4xl font-bold tracking-tight text-charcoal">About</h1>
+        <p class="mt-4 text-xl text-charcoal/80">
+          I'm Frederic Brunner, founder of <strong class="text-owl-green">AI Swiss Knife</strong>, based in Dübendorf (Zurich area), Switzerland.
+          I build <strong class="text-hot-pink">audit-first AI systems</strong> that remove bottlenecks in real businesses—especially in insurance,
+          where "move fast" only counts if you can still explain <em>why</em> the system did what it did.
+        </p>
+      </div>
+    </div>
 
-    <div class="mt-8 prose prose-lg prose-gray max-w-none">
-      <p class="text-xl text-gray-600">
-        I'm Frederic Brunner, founder of <strong>AI Swiss Knife</strong>, based in Dübendorf (Zurich area), Switzerland.
-        I build <strong>audit-first AI systems</strong> that remove bottlenecks in real businesses—especially in insurance,
-        where "move fast" only counts if you can still explain <em>why</em> the system did what it did.
-      </p>
+    <div class="mt-12 prose prose-lg max-w-none prose-headings:text-charcoal prose-p:text-charcoal/80 prose-strong:text-owl-green prose-a:text-hot-pink prose-a:no-underline hover:prose-a:underline">
 
       <h2>What I Do</h2>
       <p>

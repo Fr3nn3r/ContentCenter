@@ -19,9 +19,9 @@ function isActive(href: string, current: string): boolean {
 }
 ---
 
-<header class="border-b border-gray-200 bg-white">
+<header class="border-b border-owl-green/20 bg-cream">
   <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
-    <a href="/" class="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors">
+    <a href="/" class="text-lg font-semibold text-charcoal hover:text-hot-pink transition-colors">
       Fred Brunner
     </a>
 
@@ -34,8 +34,8 @@ function isActive(href: string, current: string): boolean {
             class:list={[
               'text-sm font-medium transition-colors',
               isActive(link.href, currentPath)
-                ? 'text-gray-900'
-                : 'text-gray-500 hover:text-gray-900',
+                ? 'text-hot-pink'
+                : 'text-charcoal/70 hover:text-hot-pink',
             ]}
             aria-current={isActive(link.href, currentPath) ? 'page' : undefined}
           >
@@ -48,7 +48,7 @@ function isActive(href: string, current: string): boolean {
     <!-- Mobile menu button -->
     <button
       type="button"
-      class="sm:hidden p-2 text-gray-500 hover:text-gray-900 transition-colors"
+      class="sm:hidden p-2 text-charcoal hover:text-hot-pink transition-colors"
       aria-label="Open menu"
       aria-expanded="false"
       aria-controls="mobile-menu"
@@ -61,7 +61,7 @@ function isActive(href: string, current: string): boolean {
   </nav>
 
   <!-- Mobile navigation -->
-  <div id="mobile-menu" class="hidden sm:hidden border-t border-gray-200">
+  <div id="mobile-menu" class="hidden sm:hidden border-t border-owl-green/20">
     <ul class="px-4 py-4 space-y-4">
       {navLinks.map((link) => (
         <li>
@@ -70,8 +70,8 @@ function isActive(href: string, current: string): boolean {
             class:list={[
               'block text-sm font-medium transition-colors',
               isActive(link.href, currentPath)
-                ? 'text-gray-900'
-                : 'text-gray-500 hover:text-gray-900',
+                ? 'text-hot-pink'
+                : 'text-charcoal/70 hover:text-hot-pink',
             ]}
             aria-current={isActive(link.href, currentPath) ? 'page' : undefined}
           >

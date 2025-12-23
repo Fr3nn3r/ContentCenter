@@ -1,15 +1,44 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* PINKOWL Brand Colors */
+:root {
+  --hot-pink: #FF4081;
+  --owl-green: #0D7377;
+  --charcoal: #2D2D2D;
+  --cream: #FFF8F0;
+  --light-green-bg: #E8F4F4;
+  --light-pink-bg: #FFE4EC;
+}
+
 /* Base styles */
 html {
   font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
   scroll-behavior: smooth;
 }
 
+body {
+  background-color: var(--cream);
+  color: var(--charcoal);
+}
+
+/* Brand utility classes */
+.bg-cream { background-color: var(--cream); }
+.bg-pink-light { background-color: var(--light-pink-bg); }
+.bg-green-light { background-color: var(--light-green-bg); }
+.bg-hot-pink { background-color: var(--hot-pink); }
+.bg-owl-green { background-color: var(--owl-green); }
+
+.text-hot-pink { color: var(--hot-pink); }
+.text-owl-green { color: var(--owl-green); }
+.text-charcoal { color: var(--charcoal); }
+
+.border-hot-pink { border-color: var(--hot-pink); }
+.border-owl-green { border-color: var(--owl-green); }
+
 /* Focus styles for accessibility */
 :focus-visible {
-  outline: 2px solid #2563eb;
+  outline: 2px solid var(--hot-pink);
   outline-offset: 2px;
 }
 
@@ -19,7 +48,7 @@ html {
   top: -40px;
   left: 0;
   padding: 8px 16px;
-  background: #1a1a1a;
+  background: var(--charcoal);
   color: white;
   z-index: 100;
 }
