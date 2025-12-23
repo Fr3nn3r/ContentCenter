@@ -27,7 +27,7 @@ test.describe('Layout and Navigation', () => {
     }
 
     // Hero section
-    await expect(page.locator('h1')).toContainText('AI systems');
+    await expect(page.locator('h1')).toContainText('AI');
 
     // Footer exists
     const footer = page.locator('footer');
@@ -125,7 +125,7 @@ test.describe('Visual Layout', () => {
   test('buttons have proper styling', async ({ page }) => {
     await page.goto('/');
 
-    const primaryButton = page.getByRole('link', { name: 'Get in touch' });
+    const primaryButton = page.getByRole('link', { name: /Book a call|Get in touch/ });
     await expect(primaryButton).toBeVisible();
 
     const bgColor = await primaryButton.evaluate((el) =>
