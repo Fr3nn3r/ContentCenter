@@ -12,10 +12,36 @@ const Tag = href ? 'a' : 'div';
 <Tag
   href={href}
   class:list={[
-    'block rounded-lg border-2 border-owl-green/20 bg-cream p-6',
-    href && 'hover:border-hot-pink hover:shadow-md transition-all',
+    'card-base',
+    href && 'card-interactive',
     className,
   ]}
 >
   <slot />
 </Tag>
+
+<style>
+  .card-base {
+    display: block;
+    border-radius: 12px;
+    background: white;
+    padding: 1.5rem;
+    border: 1px solid rgba(13, 115, 119, 0.1);
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.04),
+      0 4px 12px rgba(0, 0, 0, 0.03);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-interactive:hover {
+    border-color: var(--hot-pink);
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.08),
+      0 8px 24px rgba(255, 64, 129, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .card-interactive:active {
+    transform: translateY(0);
+  }
+</style>

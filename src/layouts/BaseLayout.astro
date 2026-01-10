@@ -83,5 +83,32 @@ const absoluteOgImage = ogImage?.startsWith('http') ? ogImage : `${SITE_URL}${og
     </main>
 
     <Footer />
+
+    <!-- Scroll animation trigger -->
+    <script>
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!prefersReducedMotion) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+        );
+
+        document.querySelectorAll('.fade-in-up, .stagger-children').forEach((el) => {
+          observer.observe(el);
+        });
+      } else {
+        document.querySelectorAll('.fade-in-up, .stagger-children').forEach((el) => {
+          el.classList.add('visible');
+        });
+      }
+    </script>
   </body>
 </html>

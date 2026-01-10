@@ -15,7 +15,20 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
-const { title, oneLiner, tags, industry, stack, problem, constraints, approach, results, artifacts } = project.data;
+const {
+  title,
+  oneLiner,
+  tags,
+  industry,
+  stack,
+  problem,
+  constraints,
+  approach,
+  results,
+  outcomes,
+  ctas,
+  artifacts,
+} = project.data;
 
 const breadcrumbSchema = buildBreadcrumbSchema([
   { name: 'Home', url: 'https://fredbrunner.com/' },
@@ -32,6 +45,10 @@ const projectSchema = buildProjectSchema({
 });
 
 const pageSchemas = [breadcrumbSchema, projectSchema];
+
+const imageArtifacts = artifacts.filter((a) => a.type === 'image');
+const demoArtifacts = artifacts.filter((a) => a.type === 'demo');
+const linkArtifacts = artifacts.filter((a) => a.type === 'link');
 ---
 
 <BaseLayout
@@ -39,23 +56,77 @@ const pageSchemas = [breadcrumbSchema, projectSchema];
   description={`${oneLiner}. ${results.slice(0, 100)}... Read the full case study.`}
   schema={pageSchemas}
 >
-  <article class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
-    <!-- Header -->
-    <header>
-      <div class="flex flex-wrap gap-2 mb-4">
-        {tags.map((tag) => (
-          <Tag href={`/tags/${tag.toLowerCase()}`}>{tag}</Tag>
-        ))}
+  <!-- Full-bleed hero with featured artifact -->
+  {imageArtifacts.length > 0 && (
+    <div class="relative bg-charcoal">
+      <div class="absolute inset-0 bg-gradient-to-b from-charcoal/80 to-charcoal/95 z-10"></div>
+      <img
+        src={imageArtifacts[0].url}
+        alt={imageArtifacts[0].label}
+        class="w-full h-64 sm:h-80 lg:h-96 object-cover opacity-40"
+      />
+      <div class="absolute inset-0 z-20 flex items-end">
+        <div class="mx-auto max-w-3xl px-4 sm:px-6 pb-8 sm:pb-12 w-full">
+          <div class="flex flex-wrap gap-2 mb-3">
+            {tags.map((tag) => (
+              <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-white/90">{tag}</span>
+            ))}
+          </div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">{title}</h1>
+          <p class="mt-3 text-lg sm:text-xl text-white/80 max-w-2xl">{oneLiner}</p>
+        </div>
       </div>
-      <h1 class="text-4xl font-bold tracking-tight text-gray-900">{title}</h1>
-      <p class="mt-4 text-xl text-gray-600">{oneLiner}</p>
-    </header>
+    </div>
+  )}
 
-    <!-- Meta -->
-    <dl class="mt-8 grid grid-cols-2 gap-4 text-sm border-y border-gray-200 py-6">
+  <article class="mx-auto max-w-3xl px-4 sm:px-6">
+    <!-- Fallback header if no artifacts -->
+    {imageArtifacts.length === 0 && (
+      <header class="pt-16 sm:pt-24">
+        <div class="flex flex-wrap gap-2 mb-4">
+          {tags.map((tag) => (
+            <Tag href={`/tags/${tag.toLowerCase()}`}>{tag}</Tag>
+          ))}
+        </div>
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900">{title}</h1>
+        <p class="mt-4 text-xl text-gray-600">{oneLiner}</p>
+      </header>
+    )}
+
+    <!-- TL;DR Card -->
+    <div class="tldr-card fade-in-up">
+      <div class="tldr-header">
+        <span class="tldr-badge">TL;DR</span>
+        <span class="tldr-title">Key Outcomes</span>
+      </div>
+      {outcomes.length > 0 && (
+        <ul class="tldr-outcomes">
+          {outcomes.map((outcome) => (
+            <li class="tldr-outcome">
+              <svg class="tldr-check" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>{outcome}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <div class="tldr-actions">
+        {demoArtifacts.map((demo) => (
+          <Button href={demo.url} variant="primary" size="sm">{demo.label}</Button>
+        ))}
+        {ctas.map((cta) => (
+          <Button href={cta.href} variant={cta.variant} size="sm">{cta.label}</Button>
+        ))}
+        <Button href="/contact" variant="secondary" size="sm">Book a call</Button>
+      </div>
+    </div>
+
+    <!-- Meta strip -->
+    <dl class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm py-6 border-b border-gray-200">
       <div>
         <dt class="font-medium text-gray-500">Industry</dt>
-        <dd class="mt-1 text-gray-900">{industry}</dd>
+        <dd class="mt-1 text-gray-900 font-medium">{industry}</dd>
       </div>
       <div>
         <dt class="font-medium text-gray-500">Stack</dt>
@@ -63,41 +134,99 @@ const pageSchemas = [breadcrumbSchema, projectSchema];
       </div>
     </dl>
 
-    <!-- Summary sections -->
-    <div class="mt-12 space-y-8">
-      <section>
-        <h2 class="text-lg font-semibold text-gray-900">Problem</h2>
-        <p class="mt-2 text-gray-600">{problem}</p>
+    <!-- Additional Artifacts Gallery (skip first which is hero) -->
+    {imageArtifacts.length > 1 && (
+      <section class="mt-10 fade-in-up">
+        <h2 class="text-lg font-semibold text-gray-900 mb-6">Screenshots</h2>
+        <div class="grid gap-6 sm:grid-cols-2">
+          {imageArtifacts.slice(1).map((artifact) => (
+            <figure class="artifact-figure">
+              <img
+                src={artifact.url}
+                alt={artifact.label}
+                class="rounded-xl shadow-lg w-full"
+                loading="lazy"
+              />
+              {artifact.caption && (
+                <figcaption class="mt-3 text-sm text-gray-500">
+                  {artifact.caption}
+                </figcaption>
+              )}
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Summary sections with visual distinction -->
+    <div class="mt-12 space-y-6">
+      <section class="case-section case-section-problem fade-in-up">
+        <div class="case-section-icon">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900">Problem</h2>
+          <p class="mt-2 text-gray-600">{problem}</p>
+        </div>
       </section>
 
-      <section>
-        <h2 class="text-lg font-semibold text-gray-900">Constraints</h2>
-        <p class="mt-2 text-gray-600">{constraints}</p>
+      <section class="case-section case-section-constraints fade-in-up">
+        <div class="case-section-icon">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900">Constraints</h2>
+          <p class="mt-2 text-gray-600">{constraints}</p>
+        </div>
       </section>
 
-      <section>
-        <h2 class="text-lg font-semibold text-gray-900">Approach</h2>
-        <p class="mt-2 text-gray-600">{approach}</p>
+      <!-- Approach - workflow highlight -->
+      <section class="approach-highlight fade-in-up">
+        <div class="approach-header">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          <h2 class="text-lg font-semibold text-gray-900">The Approach</h2>
+        </div>
+        <div class="approach-content">
+          <p class="text-gray-700 leading-relaxed">{approach}</p>
+        </div>
       </section>
 
-      <section>
-        <h2 class="text-lg font-semibold text-gray-900">Results</h2>
-        <p class="mt-2 text-gray-600">{results}</p>
+      <!-- Results - highlighted outcome box -->
+      <section class="results-highlight fade-in-up">
+        <div class="results-badge">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Results</span>
+        </div>
+        <p class="results-text">{results}</p>
       </section>
 
-      {artifacts.length > 0 && (
-        <section>
-          <h2 class="text-lg font-semibold text-gray-900">Artifacts</h2>
-          <ul class="mt-2 space-y-2">
-            {artifacts.map((artifact) => (
-              <li>
-                <a href={artifact.url} class="text-blue-600 hover:underline">
-                  {artifact.label}
-                </a>
-                <span class="text-gray-500 text-sm ml-2">({artifact.type})</span>
-              </li>
-            ))}
-          </ul>
+      {linkArtifacts.length > 0 && (
+        <section class="case-section fade-in-up">
+          <div class="case-section-icon">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-lg font-semibold text-gray-900">Resources</h2>
+            <ul class="mt-2 space-y-2">
+              {linkArtifacts.map((artifact) => (
+                <li>
+                  <a href={artifact.url} class="text-hot-pink hover:underline">
+                    {artifact.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
       )}
     </div>
@@ -107,9 +236,17 @@ const pageSchemas = [breadcrumbSchema, projectSchema];
       <Content />
     </div>
 
-    <!-- Back link -->
+    <!-- Bottom CTA -->
     <div class="mt-16 pt-8 border-t border-gray-200">
-      <Button href="/projects" variant="ghost">&larr; All projects</Button>
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <Button href="/projects" variant="ghost">&larr; All projects</Button>
+        <div class="flex gap-4">
+          {demoArtifacts.length > 0 && (
+            <Button href={demoArtifacts[0].url} variant="secondary">Try live demo</Button>
+          )}
+          <Button href="/contact" variant="primary">Book a call</Button>
+        </div>
+      </div>
     </div>
   </article>
 </BaseLayout>

@@ -3,7 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import Card from '../components/Card.astro';
 import Tag from '../components/Tag.astro';
+import HeroEvidence from '../components/HeroEvidence.astro';
 import { buildBreadcrumbSchema } from '../lib/seo';
+import { getCollection } from 'astro:content';
 
 const breadcrumbSchema = buildBreadcrumbSchema([
   { name: 'Home', url: 'https://fredbrunner.com/' },
@@ -13,25 +15,35 @@ const featuredProjects = [
   {
     title: 'ClaimEval',
     oneLiner: 'QA copilot for claims review',
-    outcome: 'Faster QA cycles with audit trail',
+    outcome: 'Error drivers + benchmark drilldown',
     tags: ['AI', 'Insurance'],
     href: '/projects/claimeval',
-  },
-  {
-    title: 'Prompt Management Playbook',
-    oneLiner: 'Versioned, testable prompts',
-    outcome: 'Zero mystery breakages',
-    tags: ['AI', 'DevOps'],
-    href: '/projects/prompt-playbook',
+    thumbnail: '/img/review.png',
+    demoHref: 'https://claimeval.vercel.app/claims',
+    primary: true,
   },
   {
     title: 'Agentic Context Builder',
     oneLiner: 'Reliable LLM context pipelines',
-    outcome: 'Debuggable agent workflows',
+    outcome: 'Evidence-first context packs',
     tags: ['AI', 'Architecture'],
     href: '/projects/context-builder',
+    thumbnail: '/img/context-builder.jpg',
+  },
+  {
+    title: 'Prompt Management Playbook',
+    oneLiner: 'Versioned, testable prompts',
+    outcome: 'Prompt versioning + governance pack',
+    tags: ['AI', 'DevOps'],
+    href: '/projects/prompt-playbook',
+    thumbnail: '/Prompt Management Playbook.jpg',
   },
 ];
+
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const latestPosts = posts
+  .sort((a, b) => b.data.datePublished.getTime() - a.data.datePublished.getTime())
+  .slice(0, 3);
 ---
 
 <BaseLayout
@@ -39,79 +51,275 @@ const featuredProjects = [
   description="Frederic Brunner - AI Solutions Architect in Switzerland. Done-for-you, audit-first AI that automates claims operations without sacrificing explainability. Book a call."
   schema={breadcrumbSchema}
 >
-  <div class="mx-auto max-w-5xl px-4 sm:px-6">
-    <!-- Hero -->
-    <section class="py-16 sm:py-24">
-      <div class="max-w-2xl">
-        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-          Audit-first AI for claims and underwriting.
-        </h1>
-        <p class="mt-6 text-lg text-gray-600 leading-relaxed">
-          I'm <strong>Frederic Brunner</strong>, founder of <strong>AI Swiss Knife</strong> (Zurich area).
-          I deliver done-for-you AI that processes unstructured documents and automates real claims
-          operations—without sacrificing explainability.
-        </p>
-        <ul class="mt-6 space-y-2 text-gray-600">
-          <li class="flex items-start gap-2">
-            <span class="text-gray-400 mt-1">-</span>
-            <span><strong>Automate claim ops</strong>, not just summaries: open claims, check coverage, cross-check documents</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="text-gray-400 mt-1">-</span>
-            <span><strong>Built for governance</strong>: structured outputs + review loops + evidence trails</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="text-gray-400 mt-1">-</span>
-            <span><strong>Pragmatic stack</strong>: designed to integrate into real enterprise workflows</span>
-          </li>
-        </ul>
-        <div class="mt-8 flex flex-wrap gap-4">
-          <Button href="/contact" variant="primary">Book a call</Button>
-          <Button href="/projects" variant="secondary">See what I build</Button>
-        </div>
-        <p class="mt-6 text-sm text-gray-500">
-          Based near Dübendorf (Zurich) · 20+ years enterprise insurance delivery · 30 years programming
-        </p>
-      </div>
-    </section>
+  <!-- Hero with gradient background -->
+  <section class="relative overflow-hidden">
+    <!-- Background gradient: cream to light pink/green -->
+    <div class="absolute inset-0 bg-gradient-to-br from-cream via-light-pink-bg/30 to-light-green-bg/50"></div>
+    <div class="absolute inset-0 noise-overlay"></div>
 
-    <!-- Featured Projects -->
-    <section class="py-16 border-t border-gray-200">
-      <div class="flex items-baseline justify-between mb-8">
-        <h2 class="text-2xl font-bold text-gray-900">Featured Projects</h2>
-        <a href="/projects" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">
-          View all &rarr;
-        </a>
+    <div class="relative mx-auto max-w-5xl px-4 sm:px-6 py-16 sm:py-24">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div class="max-w-xl relative z-10">
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl" style="letter-spacing: -0.02em;">
+            Audit-first AI for claims document workflows.
+          </h1>
+          <p class="mt-6 text-lg text-gray-700 leading-relaxed">
+            I build document intelligence that turns claim PDFs into structured outputs—with
+            provenance, quality gates, and a fast review console for exceptions.
+          </p>
+
+          <!-- Bullets with check icons -->
+          <ul class="mt-6 space-y-3">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-hot-pink mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-gray-600 text-sm"><strong class="text-gray-900">Cut review time</strong> by routing only risky cases to humans</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-hot-pink mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-gray-600 text-sm"><strong class="text-gray-900">Make outputs defensible</strong> with evidence links to source pages</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-hot-pink mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-gray-600 text-sm"><strong class="text-gray-900">Ship pragmatically</strong> — prototype &rarr; measurable runs &rarr; production</span>
+            </li>
+          </ul>
+
+          <!-- CTAs -->
+          <div class="mt-8 flex flex-wrap gap-4">
+            <Button href="/contact" variant="primary">Book a call</Button>
+            <Button href="/projects" variant="secondary">See the work</Button>
+          </div>
+
+          <!-- Async preference -->
+          <p class="mt-3 text-sm text-gray-500">
+            Prefer async? <a href="mailto:frederic.brunner@aiswissknife.com" class="text-hot-pink hover:underline">Email me</a>
+          </p>
+
+          <!-- Proof strip with visual tokens -->
+          <div class="mt-8 flex flex-wrap gap-4 text-xs text-gray-500">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+              </svg>
+              Zurich-based
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+              </svg>
+              Claims QA + Document intelligence
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+              </svg>
+              Evidence & provenance
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+              </svg>
+              Live demos
+            </span>
+          </div>
+        </div>
+
+        <!-- Hero visual - visible on all screens -->
+        <div class="mt-10 lg:mt-0">
+          <HeroEvidence />
+        </div>
       </div>
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {featuredProjects.map((project) => (
-          <Card href={project.href} class="flex flex-col">
+    </div>
+  </section>
+
+  <!-- Credibility strip -->
+  <section class="bg-charcoal text-white py-10 sm:py-12">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6">
+      <div class="grid gap-8 sm:grid-cols-3 text-center fade-in-up">
+        <div>
+          <p class="text-3xl sm:text-4xl font-bold text-hot-pink">10+</p>
+          <p class="mt-1 text-sm text-gray-300">Years in insurance tech</p>
+        </div>
+        <div>
+          <p class="text-3xl sm:text-4xl font-bold text-hot-pink">3</p>
+          <p class="mt-1 text-sm text-gray-300">Live production systems</p>
+        </div>
+        <div>
+          <p class="text-3xl sm:text-4xl font-bold text-hot-pink">100%</p>
+          <p class="mt-1 text-sm text-gray-300">Evidence-linked outputs</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Projects - white background -->
+  <section class="bg-white py-16 sm:py-20">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6">
+      <div class="fade-in-up">
+        <div class="flex items-baseline justify-between mb-4">
+          <h2 class="text-2xl font-bold text-gray-900">Featured Work</h2>
+          <a href="/projects" class="text-sm text-gray-500 hover:text-hot-pink transition-colors">
+            View all &rarr;
+          </a>
+        </div>
+        <p class="text-gray-500 mb-8">Systems I ship when reliability matters more than demos.</p>
+      </div>
+
+      <!-- Primary + secondary layout -->
+      <div class="grid gap-6 lg:grid-cols-3 stagger-children">
+        {featuredProjects.map((project, i) => (
+          <Card class:list={['flex flex-col', i === 0 && 'lg:col-span-2 lg:row-span-2']}>
+            {project.thumbnail && (
+              <img
+                src={project.thumbnail}
+                alt={`${project.title} screenshot`}
+                class:list={[
+                  'w-full object-cover rounded-lg mb-4',
+                  i === 0 ? 'h-56 lg:h-72' : 'h-40'
+                ]}
+                loading="lazy"
+              />
+            )}
             <div class="flex flex-wrap gap-2 mb-3">
               {project.tags.map((tag) => (
                 <Tag>{tag}</Tag>
               ))}
             </div>
-            <h3 class="font-semibold text-lg text-gray-900">{project.title}</h3>
+            <h3 class:list={['font-semibold text-gray-900', i === 0 ? 'text-xl' : 'text-lg']}>
+              {project.title}
+            </h3>
             <p class="mt-1 text-sm text-gray-500">{project.oneLiner}</p>
             <p class="mt-3 text-sm text-gray-600">
-              <span class="font-medium">Outcome:</span> {project.outcome}
+              <span class="font-medium text-hot-pink">Outcome:</span> {project.outcome}
             </p>
+            <div class="mt-4 pt-4 border-t border-gray-100 flex flex-wrap gap-2">
+              <Button href={project.href} variant="secondary" size="sm">Case study</Button>
+              {project.demoHref && (
+                <Button href={project.demoHref} variant="ghost" size="sm">Live demo &rarr;</Button>
+              )}
+            </div>
           </Card>
         ))}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Featured Writing -->
-    <section class="py-16 border-t border-gray-200">
-      <div class="flex items-baseline justify-between mb-8">
-        <h2 class="text-2xl font-bold text-gray-900">Writing</h2>
-        <a href="/blog" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">
-          View all &rarr;
-        </a>
+  <!-- See it running - accent stripe -->
+  <section class="bg-gradient-to-r from-light-green-bg to-light-pink-bg/50 py-4">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <p class="text-sm font-medium text-gray-700">See it running:</p>
+        <div class="flex gap-6">
+          <a
+            href="https://claimeval.vercel.app/claims"
+            class="text-sm text-hot-pink hover:underline font-medium"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ClaimEval Demo &rarr;
+          </a>
+          <a
+            href="https://mira-travel-demo.vercel.app/simulator"
+            class="text-sm text-hot-pink hover:underline font-medium"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Mira Travel Demo &rarr;
+          </a>
+        </div>
       </div>
-      <p class="text-gray-500">
-        Blog posts coming soon. Topics: AI reliability, insurance automation, prompt engineering.
-      </p>
-    </section>
-  </div>
+    </div>
+  </section>
+
+  <!-- Signature Visual: How it works - cream background -->
+  <section class="bg-cream py-16 sm:py-20">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6">
+      <div class="fade-in-up">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">How it works (in one view)</h2>
+        <p class="text-gray-600 mb-8 max-w-2xl">
+          Most AI demos stop at "it extracted something."
+          I optimize for what matters in claims ops: <strong>traceable fields, quality gates, and a review console</strong> that makes exceptions fast.
+        </p>
+      </div>
+      <div class="grid gap-8 lg:grid-cols-2 items-start fade-in-up">
+        <div class="rounded-xl overflow-hidden shadow-xl">
+          <img
+            src="/img/context-builder.jpg"
+            alt="ContextBuilder outcome-oriented workflow diagram"
+            class="w-full"
+            loading="lazy"
+          />
+        </div>
+        <div>
+          <ul class="space-y-4 text-gray-600">
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 w-8 h-8 rounded-full bg-owl-green text-white text-sm font-bold flex items-center justify-center shadow-md">1</span>
+              <span><strong class="text-gray-900">Ingest</strong> messy document packs (PDFs, images, emails)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 w-8 h-8 rounded-full bg-owl-green text-white text-sm font-bold flex items-center justify-center shadow-md">2</span>
+              <span><strong class="text-gray-900">Extract</strong> structured fields with source citations</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 w-8 h-8 rounded-full bg-owl-green text-white text-sm font-bold flex items-center justify-center shadow-md">3</span>
+              <span><strong class="text-gray-900">Validate</strong> against rules and flag exceptions</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 w-8 h-8 rounded-full bg-owl-green text-white text-sm font-bold flex items-center justify-center shadow-md">4</span>
+              <span><strong class="text-gray-900">Review</strong> edge cases in a human console</span>
+            </li>
+          </ul>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <Button href="/projects/context-builder" variant="secondary">Read the case study</Button>
+            <Button href="https://claimeval.vercel.app/claims" variant="ghost">See the review UI &rarr;</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Writing - white background -->
+  <section class="bg-white py-16 sm:py-20">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6">
+      <div class="fade-in-up">
+        <div class="flex items-baseline justify-between mb-4">
+          <h2 class="text-2xl font-bold text-gray-900">Writing</h2>
+          <a href="/blog" class="text-sm text-gray-500 hover:text-hot-pink transition-colors">
+            View all &rarr;
+          </a>
+        </div>
+        <p class="text-gray-500 mb-8">
+          Short notes on building audit-friendly AI in regulated workflows—prompts, provenance, evaluation, and pragmatic delivery.
+        </p>
+      </div>
+      {latestPosts.length > 0 ? (
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 stagger-children">
+          {latestPosts.map((post) => (
+            <Card href={`/blog/${post.id}`} class="flex flex-col">
+              <div class="flex flex-wrap gap-2 mb-3">
+                {post.data.tags.map((tag) => (
+                  <Tag>{tag}</Tag>
+                ))}
+              </div>
+              <h3 class="font-semibold text-lg text-gray-900">{post.data.title}</h3>
+              <p class="mt-1 text-sm text-gray-500 line-clamp-2">{post.data.summary}</p>
+              <p class="mt-auto pt-4 text-xs text-gray-400">
+                {post.data.datePublished.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+              </p>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <p class="text-gray-400 italic">Posts coming soon.</p>
+      )}
+    </div>
+  </section>
 </BaseLayout>
+

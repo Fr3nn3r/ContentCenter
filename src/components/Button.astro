@@ -15,24 +15,128 @@ const {
 
 const Tag = href ? 'a' : 'button';
 
-const baseStyles = 'inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
-
-const variantStyles = {
-  primary: 'bg-hot-pink text-white hover:opacity-90',
-  secondary: 'border-2 border-owl-green bg-transparent text-owl-green hover:bg-green-light',
-  ghost: 'text-charcoal hover:text-hot-pink',
-};
-
 const sizeStyles = {
-  sm: 'h-8 px-3 text-sm rounded',
-  md: 'h-10 px-4 text-sm rounded-md',
-  lg: 'h-12 px-6 text-base rounded-md',
+  sm: 'btn-sm',
+  md: 'btn-md',
+  lg: 'btn-lg',
 };
 ---
 
 <Tag
   href={href}
-  class:list={[baseStyles, variantStyles[variant], sizeStyles[size], className]}
+  class:list={['btn', `btn-${variant}`, sizeStyles[size], className]}
 >
   <slot />
 </Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--hot-pink);
+    outline-offset: 2px;
+  }
+
+  .btn:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  /* Sizes */
+  .btn-sm {
+    height: 2rem;
+    padding: 0 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 6px;
+  }
+
+  .btn-md {
+    height: 2.5rem;
+    padding: 0 1.25rem;
+    font-size: 0.875rem;
+    border-radius: 8px;
+  }
+
+  .btn-lg {
+    height: 3rem;
+    padding: 0 1.75rem;
+    font-size: 1rem;
+    border-radius: 8px;
+  }
+
+  /* Primary - bold CTA */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--hot-pink) 0%, #E91E63 100%);
+    color: white;
+    box-shadow:
+      0 2px 4px rgba(255, 64, 129, 0.3),
+      0 4px 12px rgba(255, 64, 129, 0.2);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 4px 8px rgba(255, 64, 129, 0.4),
+      0 8px 20px rgba(255, 64, 129, 0.25);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+    box-shadow:
+      0 1px 2px rgba(255, 64, 129, 0.3),
+      0 2px 6px rgba(255, 64, 129, 0.2);
+  }
+
+  /* Secondary - outlined */
+  .btn-secondary {
+    background: transparent;
+    color: var(--hot-pink);
+    border: 2px solid var(--hot-pink);
+  }
+
+  .btn-secondary:hover {
+    background: var(--light-pink-bg);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 64, 129, 0.15);
+  }
+
+  .btn-secondary:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  /* Ghost - minimal */
+  .btn-ghost {
+    background: transparent;
+    color: var(--charcoal);
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .btn-ghost:hover {
+    color: var(--hot-pink);
+  }
+
+  .btn-ghost:active {
+    opacity: 0.8;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn {
+      transition: none;
+    }
+    .btn:hover,
+    .btn:active {
+      transform: none;
+    }
+  }
+</style>

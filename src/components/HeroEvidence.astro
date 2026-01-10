@@ -1,0 +1,262 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+
+const modes = [
+  { id: 'run', label: 'Run', image: '/img/extraction.png', caption: 'Pipeline health & coverage' },
+  { id: 'benchmark', label: 'Benchmark', image: '/img/benchmark.png', caption: 'Error drivers & accuracy' },
+  { id: 'review', label: 'Review', image: '/img/review.png', caption: 'Human-in-the-loop evidence' },
+];
+---
+
+<div class:list={['hero-evidence', className]} data-hero-evidence>
+  <div class="window-frame" data-tilt-container>
+    <!-- Window header with dots and title -->
+    <div class="window-header">
+      <div class="window-dots">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+      </div>
+      <span class="window-title">Document Review UI — <span data-mode-title>Review</span></span>
+    </div>
+
+    <!-- Mode toggle pills -->
+    <div class="mode-pills">
+      {modes.map((mode, i) => (
+        <button
+          type="button"
+          class:list={['mode-pill', { active: i === 2 }]}
+          data-mode={mode.id}
+          data-label={mode.label}
+          data-caption={mode.caption}
+          aria-pressed={i === 2 ? 'true' : 'false'}
+        >
+          {mode.label}
+        </button>
+      ))}
+    </div>
+
+    <!-- Screenshots container -->
+    <div class="image-container">
+      {modes.map((mode, i) => (
+        <img
+          src={mode.image}
+          alt={`${mode.label}: ${mode.caption}`}
+          class:list={['mode-image', { active: i === 2 }]}
+          data-mode-image={mode.id}
+          loading="eager"
+          decoding="async"
+        />
+      ))}
+    </div>
+
+    <!-- Caption -->
+    <div class="image-caption" data-caption-text>
+      Human-in-the-loop evidence
+    </div>
+  </div>
+</div>
+
+<script>
+  const container = document.querySelector('[data-hero-evidence]');
+  if (container) {
+    const pills = container.querySelectorAll('.mode-pill') as NodeListOf<HTMLButtonElement>;
+    const images = container.querySelectorAll('.mode-image') as NodeListOf<HTMLImageElement>;
+    const modeTitle = container.querySelector('[data-mode-title]');
+    const captionEl = container.querySelector('[data-caption-text]');
+    const tiltContainer = container.querySelector('[data-tilt-container]') as HTMLElement;
+
+    // Mode switching
+    pills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const mode = pill.dataset.mode;
+        const label = pill.dataset.label;
+        const caption = pill.dataset.caption;
+
+        // Update button states
+        pills.forEach((p) => {
+          p.classList.remove('active');
+          p.setAttribute('aria-pressed', 'false');
+        });
+        pill.classList.add('active');
+        pill.setAttribute('aria-pressed', 'true');
+
+        // Update images
+        images.forEach((img) => {
+          const isActive = img.dataset.modeImage === mode;
+          img.classList.toggle('active', isActive);
+        });
+
+        // Update title and caption
+        if (modeTitle && label) modeTitle.textContent = label;
+        if (captionEl && caption) captionEl.textContent = caption;
+      });
+    });
+
+    // Tilt effect (desktop only, respects reduced motion)
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+
+    if (!prefersReducedMotion && isDesktop && tiltContainer) {
+      let rafId = 0;
+
+      tiltContainer.addEventListener('pointermove', (e: PointerEvent) => {
+        if (rafId) return;
+        rafId = requestAnimationFrame(() => {
+          const rect = tiltContainer.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          tiltContainer.style.transform = `perspective(1000px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg)`;
+          rafId = 0;
+        });
+      });
+
+      tiltContainer.addEventListener('pointerleave', () => {
+        tiltContainer.style.transform = '';
+      });
+    }
+  }
+</script>
+
+<style>
+  .hero-evidence {
+    --dot-size: 8px;
+    --header-padding: 0.75rem 1rem;
+    --pill-padding: 0.375rem 0.75rem;
+    --font-xs: 0.75rem;
+    --font-sm: 0.8125rem;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-evidence {
+      margin: 0;
+    }
+  }
+
+  .window-frame {
+    background: white;
+    border-radius: 8px;
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.08),
+      0 8px 24px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    transform: rotate(1deg);
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  }
+
+  .window-frame:hover {
+    box-shadow:
+      0 4px 8px rgba(0, 0, 0, 0.1),
+      0 16px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .window-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--header-padding);
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  .window-dots {
+    display: flex;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+
+  .dot {
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 50%;
+  }
+
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green { background: #28c840; }
+
+  .window-title {
+    font-size: var(--font-xs);
+    color: #868e96;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mode-pills {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    background: #f8f9fa;
+  }
+
+  .mode-pill {
+    padding: var(--pill-padding);
+    font-size: var(--font-xs);
+    font-weight: 600;
+    border-radius: 9999px;
+    border: 1px solid #dee2e6;
+    background: white;
+    color: #495057;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .mode-pill:hover {
+    border-color: var(--hot-pink);
+    color: var(--hot-pink);
+  }
+
+  .mode-pill.active {
+    background: var(--hot-pink);
+    border-color: var(--hot-pink);
+    color: white;
+  }
+
+  .image-container {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: #f1f3f4;
+  }
+
+  .mode-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .mode-image.active {
+    opacity: 1;
+  }
+
+  .image-caption {
+    padding: 0.5rem 0.75rem;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    font-size: var(--font-sm);
+    color: #495057;
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .window-frame {
+      transform: none !important;
+    }
+    .mode-image {
+      transition: none;
+    }
+  }
+</style>
