@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D7377"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+    <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF4081"/>
+      <stop offset="100%" stop-color="#E91E63"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="300" fill="#E8F4F4"/>
+
+  <!-- Input blocks (left) -->
+  <rect x="30" y="40" width="70" height="50" rx="8" fill="url(#pinkGrad)"/>
+  <rect x="30" y="110" width="70" height="50" rx="8" fill="#D1D5DB"/>
+  <rect x="30" y="180" width="70" height="50" rx="8" fill="url(#pinkGrad)" opacity="0.7"/>
+
+  <!-- Arrows to center -->
+  <path d="M110 65 L140 150" stroke="#0D7377" stroke-width="3" stroke-linecap="round"/>
+  <path d="M110 135 L140 150" stroke="#0D7377" stroke-width="3" stroke-linecap="round"/>
+  <path d="M110 205 L140 150" stroke="#0D7377" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Central processor -->
+  <rect x="145" y="100" width="110" height="100" rx="12" fill="url(#greenGrad)"/>
+  <rect x="160" y="120" width="80" height="12" rx="4" fill="white" opacity="0.9"/>
+  <rect x="160" y="140" width="60" height="12" rx="4" fill="white" opacity="0.7"/>
+  <rect x="160" y="160" width="70" height="12" rx="4" fill="white" opacity="0.5"/>
+
+  <!-- Arrows to output -->
+  <path d="M260 150 L290 80" stroke="#0D7377" stroke-width="3" stroke-linecap="round"/>
+  <path d="M260 150 L290 150" stroke="#0D7377" stroke-width="3" stroke-linecap="round"/>
+  <path d="M260 150 L290 220" stroke="#0D7377" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Output blocks (right) -->
+  <rect x="300" y="50" width="70" height="60" rx="8" fill="url(#greenGrad)"/>
+  <circle cx="335" cy="80" r="12" fill="white"/>
+  <path d="M329 80 L333 84 L341 76" stroke="#0D7377" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <rect x="300" y="120" width="70" height="60" rx="8" fill="url(#greenGrad)"/>
+  <circle cx="335" cy="150" r="12" fill="white"/>
+  <path d="M329 150 L333 154 L341 146" stroke="#0D7377" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <rect x="300" y="190" width="70" height="60" rx="8" fill="url(#greenGrad)"/>
+  <circle cx="335" cy="220" r="12" fill="white"/>
+  <path d="M329 220 L333 224 L341 216" stroke="#0D7377" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

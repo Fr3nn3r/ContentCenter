@@ -19,7 +19,7 @@ function isActive(href: string, current: string): boolean {
 }
 ---
 
-<header class="border-b border-owl-green/20 bg-cream">
+<header class="header-sticky border-b border-owl-green/20 bg-white/80" id="site-header">
   <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
     <a href="/" class="text-lg font-semibold text-charcoal hover:text-hot-pink transition-colors">
       Fred Brunner
@@ -86,10 +86,23 @@ function isActive(href: string, current: string): boolean {
 <script>
   const menuButton = document.getElementById('menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
+  const header = document.getElementById('site-header');
 
   menuButton?.addEventListener('click', () => {
     const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
     menuButton.setAttribute('aria-expanded', String(!isExpanded));
     mobileMenu?.classList.toggle('hidden');
   });
+
+  // Add scrolled class for shadow effect
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+    if (currentScroll > 10) {
+      header?.classList.add('scrolled');
+    } else {
+      header?.classList.remove('scrolled');
+    }
+    lastScroll = currentScroll;
+  }, { passive: true });
 </script>

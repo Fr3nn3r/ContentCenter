@@ -56,30 +56,33 @@ const linkArtifacts = artifacts.filter((a) => a.type === 'link');
   description={`${oneLiner}. ${results.slice(0, 100)}... Read the full case study.`}
   schema={pageSchemas}
 >
-  <!-- Full-bleed hero with featured artifact -->
+  <!-- Full-bleed hero with fixed background -->
   {imageArtifacts.length > 0 && (
-    <div class="relative bg-charcoal">
-      <div class="absolute inset-0 bg-gradient-to-b from-charcoal/80 to-charcoal/95 z-10"></div>
-      <img
-        src={imageArtifacts[0].url}
-        alt={imageArtifacts[0].label}
-        class="w-full h-64 sm:h-80 lg:h-96 object-cover opacity-40"
-      />
-      <div class="absolute inset-0 z-20 flex items-end">
-        <div class="mx-auto max-w-3xl px-4 sm:px-6 pb-8 sm:pb-12 w-full">
-          <div class="flex flex-wrap gap-2 mb-3">
-            {tags.map((tag) => (
-              <span class="text-xs font-medium px-2 py-1 rounded-full bg-white/10 text-white/90">{tag}</span>
-            ))}
-          </div>
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">{title}</h1>
-          <p class="mt-3 text-lg sm:text-xl text-white/80 max-w-2xl">{oneLiner}</p>
+    <div class="relative">
+      <!-- Fixed background image -->
+      <div
+        class="hero-fixed-bg"
+        style={`background-image: url('${imageArtifacts[0].url}')`}
+        aria-hidden="true"
+      ></div>
+
+      <!-- Spacer to push content down -->
+      <div class="h-[35vh] min-h-[280px]"></div>
+
+      <!-- Floating title card -->
+      <div class="title-card-floating mx-auto max-w-3xl">
+        <div class="flex flex-wrap gap-2 mb-4">
+          {tags.map((tag) => (
+            <Tag href={`/tags/${tag.toLowerCase()}`}>{tag}</Tag>
+          ))}
         </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-charcoal">{title}</h1>
+        <p class="mt-3 text-lg sm:text-xl text-gray-600 max-w-2xl">{oneLiner}</p>
       </div>
     </div>
   )}
 
-  <article class="mx-auto max-w-3xl px-4 sm:px-6">
+  <article class="mx-auto max-w-3xl px-4 sm:px-6 relative z-10 bg-white pb-16">
     <!-- Fallback header if no artifacts -->
     {imageArtifacts.length === 0 && (
       <header class="pt-16 sm:pt-24">
@@ -94,7 +97,7 @@ const linkArtifacts = artifacts.filter((a) => a.type === 'link');
     )}
 
     <!-- TL;DR Card -->
-    <div class="tldr-card fade-in-up">
+    <div class="tldr-card fade-in-up mt-6">
       <div class="tldr-header">
         <span class="tldr-badge">TL;DR</span>
         <span class="tldr-title">Key Outcomes</span>

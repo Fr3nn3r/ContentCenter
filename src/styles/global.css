@@ -5,6 +5,7 @@
 :root {
   --hot-pink: #FF4081;
   --owl-green: #0D7377;
+  --owl-green-light: #10B981;
   --charcoal: #2D2D2D;
   --cream: #FFF8F0;
   --light-green-bg: #E8F4F4;
@@ -12,6 +13,10 @@
   /* Primary accent uses hot-pink */
   --primary: var(--hot-pink);
   --primary-hover: #E91E63;
+  /* Green gradients */
+  --green-gradient: linear-gradient(135deg, #0D7377 0%, #10B981 100%);
+  --green-gradient-soft: linear-gradient(135deg, #E8F4F4 0%, #D1FAE5 100%);
+  --green-gradient-hero: linear-gradient(135deg, #0D7377 0%, #10B981 50%, #059669 100%);
 }
 
 /* Base styles */
@@ -42,6 +47,58 @@ body {
 .bg-primary { background-color: var(--primary); }
 .text-primary { color: var(--primary); }
 .border-primary { border-color: var(--primary); }
+
+/* Green gradient utilities */
+.bg-green-gradient { background: var(--green-gradient); }
+.bg-green-gradient-soft { background: var(--green-gradient-soft); }
+.bg-green-gradient-hero { background: var(--green-gradient-hero); }
+
+/* Sticky header styles */
+.header-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.header-sticky.scrolled {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+/* Fixed background for case study hero */
+.hero-fixed-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50vh;
+  min-height: 400px;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(2px) brightness(0.7);
+}
+
+.hero-fixed-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(13, 115, 119, 0.3) 0%, rgba(45, 45, 45, 0.8) 100%);
+}
+
+/* Floating title card */
+.title-card-floating {
+  position: relative;
+  z-index: 10;
+  margin-top: 30vh;
+  background: white;
+  border-radius: 20px 20px 0 0;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15);
+}
 
 /* Noise texture overlay */
 .noise-overlay {
@@ -176,16 +233,15 @@ body {
 
 /* TL;DR Card */
 .tldr-card {
-  margin-top: -2rem;
   position: relative;
   z-index: 30;
-  background: white;
+  background: var(--green-gradient-soft);
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow:
     0 4px 6px rgba(0, 0, 0, 0.05),
     0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(13, 115, 119, 0.1);
+  border: 1px solid rgba(13, 115, 119, 0.15);
 }
 
 .tldr-header {

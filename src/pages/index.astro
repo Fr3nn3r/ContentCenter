@@ -4,6 +4,7 @@ import Button from '../components/Button.astro';
 import Card from '../components/Card.astro';
 import Tag from '../components/Tag.astro';
 import HeroEvidence from '../components/HeroEvidence.astro';
+import DemoEmbed from '../components/DemoEmbed.astro';
 import { buildBreadcrumbSchema } from '../lib/seo';
 import { getCollection } from 'astro:content';
 
@@ -18,9 +19,8 @@ const featuredProjects = [
     outcome: 'Error drivers + benchmark drilldown',
     tags: ['AI', 'Insurance'],
     href: '/projects/claimeval',
-    thumbnail: '/img/review.png',
+    thumbnail: '/img/icons/claimeval-icon.svg',
     demoHref: 'https://claimeval.vercel.app/claims',
-    primary: true,
   },
   {
     title: 'Agentic Context Builder',
@@ -28,7 +28,7 @@ const featuredProjects = [
     outcome: 'Evidence-first context packs',
     tags: ['AI', 'Architecture'],
     href: '/projects/context-builder',
-    thumbnail: '/img/context-builder.jpg',
+    thumbnail: '/img/icons/context-builder-icon.svg',
   },
   {
     title: 'Prompt Management Playbook',
@@ -36,7 +36,7 @@ const featuredProjects = [
     outcome: 'Prompt versioning + governance pack',
     tags: ['AI', 'DevOps'],
     href: '/projects/prompt-playbook',
-    thumbnail: '/Prompt Management Playbook.jpg',
+    thumbnail: '/img/icons/prompt-playbook-icon.svg',
   },
 ];
 
@@ -51,19 +51,19 @@ const latestPosts = posts
   description="Frederic Brunner - AI Solutions Architect in Switzerland. Done-for-you, audit-first AI that automates claims operations without sacrificing explainability. Book a call."
   schema={breadcrumbSchema}
 >
-  <!-- Hero with gradient background -->
+  <!-- Hero with green gradient background -->
   <section class="relative overflow-hidden">
-    <!-- Background gradient: cream to light pink/green -->
-    <div class="absolute inset-0 bg-gradient-to-br from-cream via-light-pink-bg/30 to-light-green-bg/50"></div>
+    <!-- Background gradient: green-based -->
+    <div class="absolute inset-0 bg-green-gradient-hero"></div>
     <div class="absolute inset-0 noise-overlay"></div>
 
     <div class="relative mx-auto max-w-5xl px-4 sm:px-6 py-16 sm:py-24">
       <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
         <div class="max-w-xl relative z-10">
-          <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl" style="letter-spacing: -0.02em;">
+          <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl" style="letter-spacing: -0.02em;">
             Audit-first AI for claims document workflows.
           </h1>
-          <p class="mt-6 text-lg text-gray-700 leading-relaxed">
+          <p class="mt-6 text-lg text-white/90 leading-relaxed">
             I build document intelligence that turns claim PDFs into structured outputs—with
             provenance, quality gates, and a fast review console for exceptions.
           </p>
@@ -71,38 +71,40 @@ const latestPosts = posts
           <!-- Bullets with check icons -->
           <ul class="mt-6 space-y-3">
             <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-hot-pink mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg class="w-5 h-5 text-white mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
-              <span class="text-gray-600 text-sm"><strong class="text-gray-900">Cut review time</strong> by routing only risky cases to humans</span>
+              <span class="text-white/85 text-sm"><strong class="text-white">Cut review time</strong> by routing only risky cases to humans</span>
             </li>
             <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-hot-pink mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg class="w-5 h-5 text-white mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
-              <span class="text-gray-600 text-sm"><strong class="text-gray-900">Make outputs defensible</strong> with evidence links to source pages</span>
+              <span class="text-white/85 text-sm"><strong class="text-white">Make outputs defensible</strong> with evidence links to source pages</span>
             </li>
             <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-hot-pink mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg class="w-5 h-5 text-white mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
-              <span class="text-gray-600 text-sm"><strong class="text-gray-900">Ship pragmatically</strong> — prototype &rarr; measurable runs &rarr; production</span>
+              <span class="text-white/85 text-sm"><strong class="text-white">Ship pragmatically</strong> — prototype &rarr; measurable runs &rarr; production</span>
             </li>
           </ul>
 
           <!-- CTAs -->
           <div class="mt-8 flex flex-wrap gap-4">
             <Button href="/contact" variant="primary">Book a call</Button>
-            <Button href="/projects" variant="secondary">See the work</Button>
+            <a href="/projects" class="inline-flex items-center justify-center h-10 px-5 text-sm font-medium text-white bg-white/20 border border-white/30 rounded-lg hover:bg-white/30 transition-colors">
+              See the work
+            </a>
           </div>
 
           <!-- Async preference -->
-          <p class="mt-3 text-sm text-gray-500">
-            Prefer async? <a href="mailto:frederic.brunner@aiswissknife.com" class="text-hot-pink hover:underline">Email me</a>
+          <p class="mt-3 text-sm text-white/70">
+            Prefer async? <a href="mailto:frederic.brunner@aiswissknife.com" class="text-white hover:underline">Email me</a>
           </p>
 
           <!-- Proof strip with visual tokens -->
-          <div class="mt-8 flex flex-wrap gap-4 text-xs text-gray-500">
+          <div class="mt-8 flex flex-wrap gap-4 text-xs text-white/70">
             <span class="flex items-center gap-1.5">
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -172,18 +174,15 @@ const latestPosts = posts
         <p class="text-gray-500 mb-8">Systems I ship when reliability matters more than demos.</p>
       </div>
 
-      <!-- Primary + secondary layout -->
-      <div class="grid gap-6 lg:grid-cols-3 stagger-children">
-        {featuredProjects.map((project, i) => (
-          <Card class:list={['flex flex-col', i === 0 && 'lg:col-span-2 lg:row-span-2']}>
+      <!-- Equal-sized card grid -->
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 stagger-children">
+        {featuredProjects.map((project) => (
+          <Card class="flex flex-col">
             {project.thumbnail && (
               <img
                 src={project.thumbnail}
-                alt={`${project.title} screenshot`}
-                class:list={[
-                  'w-full object-cover rounded-lg mb-4',
-                  i === 0 ? 'h-56 lg:h-72' : 'h-40'
-                ]}
+                alt={`${project.title} illustration`}
+                class="w-full h-44 object-contain rounded-lg mb-4 bg-light-green-bg"
                 loading="lazy"
               />
             )}
@@ -192,14 +191,14 @@ const latestPosts = posts
                 <Tag>{tag}</Tag>
               ))}
             </div>
-            <h3 class:list={['font-semibold text-gray-900', i === 0 ? 'text-xl' : 'text-lg']}>
+            <h3 class="font-semibold text-gray-900 text-lg">
               {project.title}
             </h3>
             <p class="mt-1 text-sm text-gray-500">{project.oneLiner}</p>
             <p class="mt-3 text-sm text-gray-600">
-              <span class="font-medium text-hot-pink">Outcome:</span> {project.outcome}
+              <span class="font-medium text-owl-green">Outcome:</span> {project.outcome}
             </p>
-            <div class="mt-4 pt-4 border-t border-gray-100 flex flex-wrap gap-2">
+            <div class="mt-auto pt-4 border-t border-gray-100 flex flex-wrap gap-2">
               <Button href={project.href} variant="secondary" size="sm">Case study</Button>
               {project.demoHref && (
                 <Button href={project.demoHref} variant="ghost" size="sm">Live demo &rarr;</Button>
@@ -211,35 +210,28 @@ const latestPosts = posts
     </div>
   </section>
 
-  <!-- See it running - accent stripe -->
-  <section class="bg-gradient-to-r from-light-green-bg to-light-pink-bg/50 py-4">
+  <!-- Interactive Demo Embeds -->
+  <section class="bg-green-gradient py-12 sm:py-16">
     <div class="mx-auto max-w-5xl px-4 sm:px-6">
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <p class="text-sm font-medium text-gray-700">See it running:</p>
-        <div class="flex gap-6">
-          <a
-            href="https://claimeval.vercel.app/claims"
-            class="text-sm text-hot-pink hover:underline font-medium"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ClaimEval Demo &rarr;
-          </a>
-          <a
-            href="https://mira-travel-demo.vercel.app/simulator"
-            class="text-sm text-hot-pink hover:underline font-medium"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Mira Travel Demo &rarr;
-          </a>
-        </div>
+      <div class="text-center mb-8 fade-in-up">
+        <h2 class="text-2xl font-bold text-white mb-2">See it running</h2>
+        <p class="text-white/80">Try the live demos directly - no signup required</p>
+      </div>
+      <div class="grid gap-8 md:grid-cols-2 stagger-children">
+        <DemoEmbed
+          url="https://claimeval.vercel.app/claims"
+          title="ClaimEval - Claims Review Console"
+        />
+        <DemoEmbed
+          url="https://mira-travel-demo.vercel.app/simulator"
+          title="Mira Travel - Document Processing"
+        />
       </div>
     </div>
   </section>
 
-  <!-- Signature Visual: How it works - cream background -->
-  <section class="bg-cream py-16 sm:py-20">
+  <!-- Signature Visual: How it works - light green background -->
+  <section class="bg-green-gradient-soft py-16 sm:py-20">
     <div class="mx-auto max-w-5xl px-4 sm:px-6">
       <div class="fade-in-up">
         <h2 class="text-2xl font-bold text-gray-900 mb-4">How it works (in one view)</h2>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D7377"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+    <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF4081"/>
+      <stop offset="100%" stop-color="#E91E63"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="300" fill="#E8F4F4"/>
+
+  <!-- Document stack -->
+  <rect x="80" y="60" width="140" height="180" rx="8" fill="white" stroke="#0D7377" stroke-width="2"/>
+  <rect x="95" y="45" width="140" height="180" rx="8" fill="white" stroke="#0D7377" stroke-width="2"/>
+  <rect x="110" y="30" width="140" height="180" rx="8" fill="white" stroke="#0D7377" stroke-width="2"/>
+
+  <!-- Document lines -->
+  <rect x="125" y="55" width="80" height="6" rx="3" fill="#D1D5DB"/>
+  <rect x="125" y="70" width="110" height="6" rx="3" fill="#D1D5DB"/>
+  <rect x="125" y="85" width="95" height="6" rx="3" fill="#D1D5DB"/>
+  <rect x="125" y="100" width="105" height="6" rx="3" fill="#D1D5DB"/>
+
+  <!-- Checkmarks -->
+  <circle cx="290" cy="80" r="28" fill="url(#greenGrad)"/>
+  <path d="M275 80 L285 90 L305 70" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <circle cx="320" cy="140" r="22" fill="url(#pinkGrad)"/>
+  <path d="M308 140 L316 148 L332 132" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <circle cx="280" cy="190" r="25" fill="url(#greenGrad)"/>
+  <path d="M266 190 L275 199 L294 180" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Quality bars -->
+  <rect x="110" y="230" width="180" height="8" rx="4" fill="#E5E7EB"/>
+  <rect x="110" y="230" width="140" height="8" rx="4" fill="url(#greenGrad)"/>
+
+  <rect x="110" y="250" width="180" height="8" rx="4" fill="#E5E7EB"/>
+  <rect x="110" y="250" width="165" height="8" rx="4" fill="url(#pinkGrad)"/>
+</svg>
