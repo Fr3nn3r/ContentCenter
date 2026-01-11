@@ -68,36 +68,25 @@ body {
   background-color: rgba(255, 255, 255, 0.95);
 }
 
-/* Fixed background for case study hero */
-.hero-fixed-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50vh;
-  min-height: 400px;
-  z-index: 0;
-  background-size: cover;
-  background-position: center;
-  filter: blur(2px) brightness(0.7);
+/* Case study hero - title at top */
+.case-study-hero {
+  background: var(--green-gradient-soft);
+  padding-bottom: 2rem;
 }
 
-.hero-fixed-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(13, 115, 119, 0.3) 0%, rgba(45, 45, 45, 0.8) 100%);
-}
-
-/* Floating title card */
-.title-card-floating {
-  position: relative;
-  z-index: 10;
-  margin-top: 30vh;
+.case-study-header {
   background: white;
-  border-radius: 20px 20px 0 0;
-  padding: 2rem 1.5rem;
-  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(13, 115, 119, 0.1);
+}
+
+.case-study-hero-image {
+  margin-top: 1.5rem;
+}
+
+.case-study-hero-image img {
+  max-height: 500px;
+  object-fit: cover;
+  object-position: top center;
 }
 
 /* Noise texture overlay */

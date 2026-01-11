@@ -56,28 +56,32 @@ const linkArtifacts = artifacts.filter((a) => a.type === 'link');
   description={`${oneLiner}. ${results.slice(0, 100)}... Read the full case study.`}
   schema={pageSchemas}
 >
-  <!-- Full-bleed hero with fixed background -->
+  <!-- Hero section with title at top -->
   {imageArtifacts.length > 0 && (
-    <div class="relative">
-      <!-- Fixed background image -->
-      <div
-        class="hero-fixed-bg"
-        style={`background-image: url('${imageArtifacts[0].url}')`}
-        aria-hidden="true"
-      ></div>
-
-      <!-- Spacer to push content down -->
-      <div class="h-[35vh] min-h-[280px]"></div>
-
-      <!-- Floating title card -->
-      <div class="title-card-floating mx-auto max-w-3xl">
-        <div class="flex flex-wrap gap-2 mb-4">
-          {tags.map((tag) => (
-            <Tag href={`/tags/${tag.toLowerCase()}`}>{tag}</Tag>
-          ))}
+    <div class="case-study-hero">
+      <!-- Title card at top -->
+      <div class="case-study-header">
+        <div class="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-12">
+          <div class="flex flex-wrap gap-2 mb-4">
+            {tags.map((tag) => (
+              <Tag href={`/tags/${tag.toLowerCase()}`}>{tag}</Tag>
+            ))}
+          </div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-charcoal">{title}</h1>
+          <p class="mt-3 text-lg sm:text-xl text-gray-600 max-w-2xl">{oneLiner}</p>
         </div>
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-charcoal">{title}</h1>
-        <p class="mt-3 text-lg sm:text-xl text-gray-600 max-w-2xl">{oneLiner}</p>
+      </div>
+
+      <!-- Hero image below title -->
+      <div class="case-study-hero-image">
+        <div class="mx-auto max-w-4xl px-4 sm:px-6">
+          <img
+            src={imageArtifacts[0].url}
+            alt={`${title} screenshot`}
+            class="w-full rounded-xl shadow-2xl border border-gray-200"
+            loading="eager"
+          />
+        </div>
       </div>
     </div>
   )}
