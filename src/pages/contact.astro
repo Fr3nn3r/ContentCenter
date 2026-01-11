@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
+import Callout from '../components/Callout.astro';
 import { buildBreadcrumbSchema } from '../lib/seo';
 
 const breadcrumbSchema = buildBreadcrumbSchema([
@@ -22,13 +23,36 @@ const breadcrumbSchema = buildBreadcrumbSchema([
     </p>
 
     <div class="mt-12 space-y-8">
+      <!-- What to include -->
+      <Callout variant="info" title="What to include">
+        <p class="text-sm text-gray-600 mb-3">To make our conversation productive, include:</p>
+        <ul class="space-y-1 text-sm text-gray-600">
+          <li class="flex items-start gap-2">
+            <span class="text-gray-400">-</span>
+            <span>Line of business + country</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-gray-400">-</span>
+            <span>Document types + typical pack size</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-gray-400">-</span>
+            <span>What "success" means (speed, accuracy, auditability, cost)</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-gray-400">-</span>
+            <span>Current system constraints (Guidewire, repository, exports)</span>
+          </li>
+        </ul>
+      </Callout>
+
       <!-- Email -->
       <div>
         <h2 class="font-semibold text-lg text-gray-900">Email</h2>
         <p class="mt-2">
           <a
             href="mailto:frederic.brunner@aiswissknife.com"
-            class="text-blue-600 hover:underline"
+            class="text-hot-pink hover:underline"
           >
             frederic.brunner@aiswissknife.com
           </a>
@@ -45,7 +69,7 @@ const breadcrumbSchema = buildBreadcrumbSchema([
           For a quick intro call, book a time directly:
         </p>
         <div class="mt-4">
-          <Button href="https://calendly.com/frederic-brunner/intro" variant="secondary">
+          <Button href="https://calendly.com/frederic-brunner/intro" variant="primary">
             Book a 15-min call
           </Button>
         </div>
@@ -56,12 +80,17 @@ const breadcrumbSchema = buildBreadcrumbSchema([
         <h2 class="font-semibold text-lg text-gray-900">Elsewhere</h2>
         <ul class="mt-2 space-y-2">
           <li>
-            <a href="https://www.linkedin.com/in/frdbrunner/" class="text-blue-600 hover:underline">
+            <a href="https://www.linkedin.com/in/frdbrunner/" class="text-hot-pink hover:underline">
               LinkedIn
             </a>
           </li>
           <li>
-            <a href="https://x.com/fredbrunner" class="text-blue-600 hover:underline">
+            <a href="https://github.com/frdbrunner" class="text-hot-pink hover:underline">
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a href="https://x.com/fredbrunner" class="text-hot-pink hover:underline">
               X (Twitter)
             </a>
           </li>

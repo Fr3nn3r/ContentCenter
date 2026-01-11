@@ -8,10 +8,16 @@ problem: "Prompts and model settings scattered across codebases make audits pain
 constraints: "Must support multiple workflows, evolving schemas, and multiple models without rewriting half the app."
 approach: "Put prompt text + config + schema expectations into a single versioned template file, loaded by a strict runtime."
 results: "Faster iteration, fewer regressions, and a clean review workflow where changes are obvious."
+outcomes:
+  - "Zero mystery breakages—when prompts change, everyone knows"
+  - "Faster onboarding—'here is the prompt file; everything is inside'"
+  - "Easier audits—'which prompt version generated this?' has an answer"
 artifacts:
   - type: image
     url: "/Prompt Management Playbook.jpg"
     label: "Prompt Management Playbook Overview"
+    caption: "Single source of truth for prompts: metadata, inputs, outputs, and text together."
+thumbnail: "/Prompt Management Playbook.jpg"
 featured: true
 draft: false
 ---

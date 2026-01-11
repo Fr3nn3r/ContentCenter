@@ -1,0 +1,137 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<section class:list={['hero-depth-section', className]}>
+  <div class="depth" data-depth-hero>
+    <img
+      class="layer layer-back"
+      src="/img/benchmark.png"
+      alt="Benchmark UI showing metrics and error drivers"
+      loading="eager"
+    />
+    <img
+      class="layer layer-mid"
+      src="/img/extraction.png"
+      alt="Extraction run overview showing pipeline"
+      loading="eager"
+    />
+    <img
+      class="layer layer-front"
+      src="/img/review.png"
+      alt="Document review interface with provenance"
+      loading="eager"
+    />
+    <div class="label">
+      <span class="pill">Audit-first</span>
+      <p class="flow-text">Evidence &rarr; QA &rarr; Metrics</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const el = document.querySelector("[data-depth-hero]");
+  if (el) {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduced) {
+      let raf = 0;
+      el.addEventListener("pointermove", (e) => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          const r = (el as HTMLElement).getBoundingClientRect();
+          const x = ((e as PointerEvent).clientX - r.left) / r.width - 0.5;
+          const y = ((e as PointerEvent).clientY - r.top) / r.height - 0.5;
+          (el as HTMLElement).style.setProperty("--mx", x.toFixed(3));
+          (el as HTMLElement).style.setProperty("--my", y.toFixed(3));
+          raf = 0;
+        });
+      });
+      el.addEventListener("pointerleave", () => {
+        (el as HTMLElement).style.setProperty("--mx", "0");
+        (el as HTMLElement).style.setProperty("--my", "0");
+      });
+    }
+  }
+</script>
+
+<style>
+  .hero-depth-section {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 4 / 3;
+  }
+
+  .depth {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    --mx: 0;
+    --my: 0;
+    perspective: 1000px;
+  }
+
+  .layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.1s ease-out;
+  }
+
+  .layer-back {
+    transform: translate3d(calc(var(--mx) * 12px), calc(var(--my) * 12px), 0) scale(1.02);
+    filter: blur(2px);
+    opacity: 0.5;
+  }
+
+  .layer-mid {
+    transform: translate3d(calc(var(--mx) * 20px), calc(var(--my) * 20px), 0) scale(1.02);
+    opacity: 0.7;
+  }
+
+  .layer-front {
+    transform: translate3d(calc(var(--mx) * 30px), calc(var(--my) * 30px), 0) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  }
+
+  .label {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--color-hot-pink, #e91e63);
+    color: white;
+    border-radius: 9999px;
+  }
+
+  .flow-text {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .layer {
+      transform: none !important;
+    }
+  }
+</style>

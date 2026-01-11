@@ -8,7 +8,27 @@ problem: "Claims QA is slow, inconsistent, and hard to audit at scale—especial
 constraints: "No access to full SOP library at start; must work with partial guidance and be adaptable across lines of business."
 approach: "A structured QA workflow: ingest a claim file, extract key facts, run rule/checklist validations, produce a QA report with evidence and gaps."
 results: "Faster QA cycles, clearer audit trail, and a repeatable process that works across different claim types."
-artifacts: []
+outcomes:
+  - "Cut review time by routing only risky cases to humans"
+  - "Make outputs defensible with evidence links back to source pages"
+  - "Standardized QA checks across reviewers using the same rubric"
+artifacts:
+  - type: demo
+    url: "https://claimeval.vercel.app/claims"
+    label: "Live demo"
+  - type: image
+    url: "/img/review.png"
+    label: "Document review interface"
+    caption: "Confirm/set/skip with provenance—every field links back to source."
+  - type: image
+    url: "/img/benchmark.png"
+    label: "Benchmark view"
+    caption: "Top error drivers + drill-down to exact evidence."
+  - type: image
+    url: "/img/extraction.png"
+    label: "Run overview"
+    caption: "Ingestion to classification to extraction to quality gates."
+thumbnail: "/img/review.png"
 featured: true
 draft: false
 ---

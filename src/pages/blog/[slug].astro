@@ -1,0 +1,121 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Tag from '../../components/Tag.astro';
+import Button from '../../components/Button.astro';
+import { buildBreadcrumbSchema, buildBlogPostSchema } from '../../lib/seo';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, datePublished, dateModified, summary, tags, heroImage } = post.data;
+
+const breadcrumbSchema = buildBreadcrumbSchema([
+  { name: 'Home', url: 'https://fredbrunner.com/' },
+  { name: 'Blog', url: 'https://fredbrunner.com/blog/' },
+  { name: title },
+]);
+
+const articleSchema = buildBlogPostSchema({
+  title,
+  summary,
+  datePublished,
+  dateModified,
+  slug: post.id,
+  tags,
+  heroImage,
+});
+
+const pageSchemas = [breadcrumbSchema, articleSchema];
+
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const relatedPosts = allPosts
+  .filter((p) => p.id !== post.id && p.data.tags.some((t) => tags.includes(t)))
+  .slice(0, 3);
+---
+
+<BaseLayout
+  title={title}
+  description={summary}
+  schema={pageSchemas}
+>
+  <article class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
+    <!-- Header -->
+    <header>
+      <div class="flex flex-wrap gap-2 mb-4">
+        {tags.map((tag) => (
+          <Tag href={`/tags/${tag.toLowerCase()}`}>{tag}</Tag>
+        ))}
+      </div>
+      <h1 class="text-4xl font-bold tracking-tight text-gray-900">{title}</h1>
+      <p class="mt-4 text-xl text-gray-600">{summary}</p>
+
+      <!-- Byline -->
+      <div class="mt-6 flex items-center gap-4 text-sm text-gray-500">
+        <a href="/about" class="font-medium text-gray-900 hover:text-hot-pink">
+          Fred Brunner
+        </a>
+        <span>&bull;</span>
+        <time datetime={datePublished.toISOString()}>
+          {datePublished.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </time>
+        {dateModified && (
+          <>
+            <span>&bull;</span>
+            <span>
+              Updated {dateModified.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+            </span>
+          </>
+        )}
+      </div>
+    </header>
+
+    {heroImage && (
+      <img
+        src={heroImage}
+        alt={title}
+        class="mt-8 w-full rounded-lg shadow-md"
+        loading="eager"
+      />
+    )}
+
+    <!-- Content -->
+    <div class="mt-12 prose prose-gray max-w-none">
+      <Content />
+    </div>
+
+    <!-- Related posts -->
+    {relatedPosts.length > 0 && (
+      <aside class="mt-16 pt-8 border-t border-gray-200">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Related posts</h2>
+        <ul class="space-y-3">
+          {relatedPosts.map((related) => (
+            <li>
+              <a
+                href={`/blog/${related.id}`}
+                class="text-hot-pink hover:underline"
+              >
+                {related.data.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+
+    <!-- Back link -->
+    <div class="mt-16 pt-8 border-t border-gray-200">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <Button href="/blog" variant="ghost">&larr; All posts</Button>
+        <Button href="/contact" variant="primary">Book a call</Button>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

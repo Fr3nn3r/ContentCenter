@@ -1,13 +1,21 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card from '../../components/Card.astro';
+import Tag from '../../components/Tag.astro';
 import { buildBreadcrumbSchema } from '../../lib/seo';
+import { getCollection } from 'astro:content';
 
 const breadcrumbSchema = buildBreadcrumbSchema([
   { name: 'Home', url: 'https://fredbrunner.com/' },
   { name: 'Blog' },
 ]);
 
-const posts: any[] = [];
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const sortedPosts = posts.sort((a, b) =>
+  b.data.datePublished.getTime() - a.data.datePublished.getTime()
+);
+
+const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
 ---
 
 <BaseLayout
@@ -16,31 +24,42 @@ const posts: any[] = [];
   schema={breadcrumbSchema}
 >
   <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
-    <h1 class="text-4xl font-bold tracking-tight text-gray-900">Blog</h1>
+    <h1 class="text-4xl font-bold tracking-tight text-gray-900">Writing</h1>
     <p class="mt-4 text-lg text-gray-600">
-      Writing about AI, automation, and building systems that work.
+      Short notes on building audit-friendly AI in regulated workflows—prompts, provenance, evaluation, and pragmatic delivery.
     </p>
 
-    {posts.length === 0 ? (
+    {allTags.length > 0 && (
+      <div class="mt-6 flex flex-wrap gap-2">
+        {allTags.map((tag) => (
+          <Tag href={`/tags/${tag.toLowerCase()}`}>{tag}</Tag>
+        ))}
+      </div>
+    )}
+
+    {sortedPosts.length === 0 ? (
       <div class="mt-12 rounded-lg border border-gray-200 bg-gray-50 p-8 text-center">
         <p class="text-gray-500">
           Blog posts coming soon.
         </p>
-        <p class="mt-2 text-sm text-gray-500">
-          Topics: AI reliability, insurance automation, prompt engineering, agentic systems.
-        </p>
       </div>
     ) : (
       <div class="mt-12 space-y-8">
-        {posts.map((post) => (
-          <article>
-            <a href={`/blog/${post.slug}`} class="group block">
-              <h2 class="font-semibold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">
-                {post.title}
-              </h2>
-              <p class="mt-1 text-sm text-gray-500">{post.summary}</p>
-            </a>
-          </article>
+        {sortedPosts.map((post) => (
+          <Card href={`/blog/${post.id}`} class="block">
+            <div class="flex flex-wrap gap-2 mb-3">
+              {post.data.tags.map((tag) => (
+                <Tag>{tag}</Tag>
+              ))}
+            </div>
+            <h2 class="font-semibold text-lg text-gray-900">
+              {post.data.title}
+            </h2>
+            <p class="mt-2 text-sm text-gray-500">{post.data.summary}</p>
+            <p class="mt-4 text-xs text-gray-400">
+              {post.data.datePublished.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </p>
+          </Card>
         ))}
       </div>
     )}

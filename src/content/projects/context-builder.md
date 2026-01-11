@@ -8,7 +8,20 @@ problem: "LLM workflows fail when context is inconsistent, too long, or assemble
 constraints: "Context sources vary wildly; output must be consistent across runs."
 approach: "Build a 'context compiler' that normalizes inputs into modular context blocks with strict rules and traceability."
 results: "Higher reliability, easier debugging, and reusable context across workflows."
-artifacts: []
+outcomes:
+  - "Fewer random failures—context issues caught before they cause bad outputs"
+  - "Faster iteration—swap blocks, not entire prompts"
+  - "Better explainability—'this answer came from these blocks' is a real answer"
+artifacts:
+  - type: image
+    url: "/img/context-builder.jpg"
+    label: "ContextBuilder workflow"
+    caption: "Outcome-oriented context assembly with traceability."
+  - type: image
+    url: "/img/claimeval-info.png"
+    label: "Business case overview"
+    caption: "QA scaling infographic showing the full workflow."
+thumbnail: "/img/context-builder.jpg"
 featured: true
 draft: false
 ---
